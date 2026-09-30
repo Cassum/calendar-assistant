@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets and local config (templates: .env.example, config.example.yaml)
+.env
+config.yaml
+
+# Local database (SQLite + WAL sidecars)
+calendar.db
+calendar.db-wal
+calendar.db-shm
+
+# Caches
+.pytest_cache/
+
+# Локальные логи запуска
+*.log

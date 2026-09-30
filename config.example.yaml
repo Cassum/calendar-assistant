@@ -1,0 +1,45 @@
+# Шаблон конфигурации. Скопируй в config.yaml и поправь под себя:
+#   cp config.example.yaml config.yaml
+# config.yaml в .gitignore — сюда не попадают локальные правки.
+
+llm:
+  # провайдер: "openai" — любой OpenAI-совместимый endpoint (OpenRouter и т.п.),
+  #             "ollama" — локальный Ollama (https://docs.ollama.com/api/openai-compatibility)
+  provider: "openai"
+  # base_url необязателен: у "ollama" — http://localhost:11434/v1,
+  # у "openai" — https://api.openai.com/v1; если нужен другой хост/порт — укажи явно
+  base_url: "https://openrouter.ai/api/v1"
+  model: "openai/gpt-4o-mini"
+  temperature: 0.1
+  # api_key: в .env как LLM_API_KEY (для provider: "ollama" не нужен — подставляется сам)
+
+  # Локальный Ollama без ключа и без провайдерских rate-лимитов:
+  # provider: "ollama"
+  # base_url: "http://localhost:11434/v1"   # необязателен, это дефолт
+  # model: "qwen3:8b"                      # модель должна быть уже: ollama pull qwen3:8b
+
+decision:
+  # слой принятия решений: "llm" | "laya" (сменный слой, подмена без правок графа)
+  layer: "llm"
+  # порог confidence: ниже → unrecognized; у облачной LLM confidence = None и порог не применяется
+  threshold: 0.5
+
+reminders:
+  # дефолтный сдвиг напоминания от начала события, минуты (0 = в момент события)
+  default_offset_minutes: 0
+  # период опроса БД планировщиком, секунды
+  tick_seconds: 30
+  # попыток отправки до status=failed (403 — сразу failed)
+  max_attempts: 3
+
+database_url: "sqlite+aiosqlite:///./calendar.db"
+
+log_level: "INFO"
+
+# JSON-логи дублируются в файл (помимо stdout); "" — только stdout
+log_file: "bot.log"
+
+langfuse:
+  host: "https://cloud.langfuse.com"
+  # public_key/secret_key: в .env как LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY
+  # без них — no-op, бот работает без трейсов

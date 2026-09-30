@@ -1,0 +1,43 @@
+[project]
+name = "calendar-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Roman Degrik", email = "r.degrik@yandex.ru" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.31.0",
+    "alembic>=1.20.0",
+    "apscheduler>=3.11.3",
+    "dateparser>=1.4.3",
+    "langfuse>=4.15.6",
+    "langgraph>=1.2.11",
+    "laya>=0.3.22",
+    "openai>=3.22.1",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.2",
+    "pyyaml>=6.0.3",
+    "sqlalchemy[asyncio]>=2.1.1",
+    "structlog>=26.1.0",
+    "tzlocal>=5.4.4",
+]
+
+[project.scripts]
+calendar-assistant = "calendar_assistant:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.22.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
